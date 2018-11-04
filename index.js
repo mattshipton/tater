@@ -51,7 +51,6 @@ async function init() {
     let thisNotModifier = nextNotModifier;
     nextNotModifier = false;
 
-    console.log();
     if(argv.d) console.log(peelCounter.primary, peelCounter.secondary[peelCounter.primary], programSplit[programCounter], programCounter);
 
     // TODO: Exponential printing of TATERS
@@ -125,9 +124,9 @@ async function init() {
       let loopCount = 1;
       let endPosition;
       for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
-        if(programSplit[programCounter] === 'tATeRs') {
+        if(programSplit[endPosition] === 'tATeRs') {
           loopCount++;
-        } else if(programSplit[programCounter] === 'tAtERs') {
+        } else if(programSplit[endPosition] === 'tAtERs') {
           loopCount--;
         }
       }
