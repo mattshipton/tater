@@ -44,10 +44,15 @@ async function init() {
 
   let nextNotModifier = false;
 
+  if(argv.d) console.log('peel |', 'peelCount |', 'instruction |', 'program counter');
+
   while(programCounter < programSplit.length) {
     // Not management
     let thisNotModifier = nextNotModifier;
     nextNotModifier = false;
+
+    console.log();
+    if(argv.d) console.log(peelCounter.primary, peelCounter.secondary[peelCounter.primary], programSplit[programCounter], programCounter);
 
     // TODO: Exponential printing of TATERS
     if(programSplit[programCounter] === 'TATERS') {
