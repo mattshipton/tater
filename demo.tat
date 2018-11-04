@@ -1,0 +1,64 @@
+print Let's play taters Taters TATERS!
+print 1: taters
+print 2: Taters
+print 3: TATERS
+print 4: rules
+
+# Input action.
+print -----
+print Select:
+mvr inc 49
+dec 48
+
+# When player chooses taters. (1)
+mvr inc mvl
+eql
+mvl
+print Player: taters!
+nxt
+inc
+mvl
+dec
+end
+
+# When player chooses Taters. (2)
+mvr inc mvl
+eql
+mvl
+print Player: Taters!
+nxt
+inc 2
+mvl
+dec
+end
+
+# When player chooses TATERS. (3)
+mvr inc mvl
+eql
+mvl
+print Player: TATERS!
+nxt
+inc 3
+mvl
+dec
+end
+
+# When player chooses rules. (4)
+mvr inc mvl
+eql
+mvl
+print Taters beats taters.
+print TATERS beats Taters.
+print taters beats TATERS.
+end
+
+#
+mvr dec mvl
+eql
+inc
+inc 2
+mvl
+sub
+
+
+end
