@@ -130,7 +130,7 @@ while(programCounter < programSplit.length) {
     if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] === peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
       let loopCount = 1;
       let endPosition;
-      for(endPosition = programCounter + 1; i < programSplit.length && loopCount > 0; i++) {
+      for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
         if(['tAteRs', 'TAteRs', 'tAteRS'].includes(programSplit[endPosition])) {
           loopCount++;
         } else if(programSplit[endPosition] === 'tATERs') {
@@ -146,7 +146,7 @@ while(programCounter < programSplit.length) {
     if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] < peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
       let loopCount = 1;
       let endPosition;
-      for(endPosition = programCounter + 1; i < programSplit.length && loopCount > 0; i++) {
+      for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
         if(['tAteRs', 'TAteRs', 'tAteRS'].includes(programSplit[endPosition])) {
           loopCount++;
         } else if(programSplit[endPosition] === 'tATERs') {
@@ -162,7 +162,7 @@ while(programCounter < programSplit.length) {
     if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] > peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
       let loopCount = 1;
       let endPosition;
-      for(endPosition = programCounter + 1; i < programSplit.length && loopCount > 0; i++) {
+      for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
         if(['tAteRs', 'TAteRs', 'tAteRS'].includes(programSplit[endPosition])) {
           loopCount++;
         } else if(programSplit[endPosition] === 'tATERs') {
