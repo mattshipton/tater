@@ -47,20 +47,20 @@ while(programCounter < programSplit.length) {
 
   // 2d peel navigation
   else if(programSplit[programCounter] === 'TaTeRs') {
-    // Move to next secondary peel
-    peelCounter.primary--;
+    // Move to previous secondary peel
+    peelCounter.primary = (peelCounter.primary + peelLimit - 1) % peelLimit;
   }
   else if(programSplit[programCounter] === ' tAtErS') {
-    // Move to previous secondary peel
-    peelCounter.primary++;
+    // Move to next secondary peel
+    peelCounter.primary = (peelCounter.primary + peelLimit + 1) % peelLimit;
   }
   else if(programSplit[programCounter] === 'TATers') {
     // Move pointer left on the secondary peel
-    peelCounter.secondary[peelCounter.primary]--;
+    peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + peelLimit - 1) % peelLimit;
   }
   else if(programSplit[programCounter] === 'tatERS') {
     // Move pointer right on the secondary peel
-    peelCounter.secondary[peelCounter.primary]++;
+    peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + peelLimit + 1) % peelLimit;
   }
 
   // Arithmetic, A is current box, B is next box
