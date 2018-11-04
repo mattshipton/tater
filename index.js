@@ -88,9 +88,9 @@ while(programCounter < programSplit.length) {
     // temp[C] = A / B
     // B = A % B
     // A = temp[C]
-    let divisionValue = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] / peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
-    peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] % peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
-    peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit] = divisionValue;
+    let divisionValue = Math.floor(peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] / peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]);
+    peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit] = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] % peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+    peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] = divisionValue;
   }
   else if(programSplit[programCounter] === 'TaTErS') {
     // A = A ** B
