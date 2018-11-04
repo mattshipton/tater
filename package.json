@@ -6,5 +6,8 @@
   "repository": "git@github.com:harryshipton/tater.git",
   "author": "Harry Shipton <me@harryshipton.com>",
   "license": "ISC",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "keypress": "^0.2.1"
+  }
 }
