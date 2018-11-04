@@ -2,17 +2,21 @@ const fs = require('fs');
 
 const KeyQueue = require('./KeyQueue');
 
+const minimist = require('minimist');
 
 async function init() {
+  const argv = minimist(process.argv.slice(2), { alias: { 'input': 'i', 'peelLength': 'l', 'peelCount': 'c', 'debug': 'd', 'speed': 's', 'tick': 't' }, default: { 'input': 'potato.🥔🥔🥔', 'peelLength': 10000, 'peelCount': 10000, 'speed': 0 } })
+  argv.l = (typeof argv.l === 'number' && argv.l > 0) ? argv.l : 10000;
+  argv.c = (typeof argv.c === 'number' && argv.c > 0) ? argv.c : 10000;
+  argv.s = (typeof argv.s === 'number' && argv.s >= 0) ? argv.s : 0;
+
   const keyQueue = new KeyQueue();
 
   // Primary is the outer array, secondary is the inner array of the peelGrid
-  const peelLimit = 10000;
-  const peelGrid = [...Array(peelLimit)].map(() => Array(peelLimit).fill(0));
-  const peelCounter = { primary: 0, secondary: Array(peelLimit).fill(0) };;
+  const peelGrid = [...Array(argv.c)].map(() => Array(argv.l).fill(0));
+  const peelCounter = { primary: 0, secondary: Array(argv.c).fill(0) };;
 
-  const fileName = 'potato.🥔🥔🥔';
-  const program = fs.readFileSync(fileName, {encoding: 'utf8'}).trim().normalize('NFKD');
+  const program = fs.readFileSync(argv.i, {encoding: 'utf8'}).trim().normalize('NFKD');
   const programSplit = program.match(/taters/gi);
 
   if(!programSplit || !programSplit.every(e => e.toLowerCase() === 'taters')) {
@@ -40,10 +44,15 @@ async function init() {
 
   let nextNotModifier = false;
 
+  if(argv.d) console.log('peel |', 'peelCount |', 'instruction |', 'program counter');
+
   while(programCounter < programSplit.length) {
     // Not management
     let thisNotModifier = nextNotModifier;
     nextNotModifier = false;
+
+    console.log();
+    if(argv.d) console.log(peelCounter.primary, peelCounter.secondary[peelCounter.primary], programSplit[programCounter], programCounter);
 
     // TODO: Exponential printing of TATERS
     if(programSplit[programCounter] === 'TATERS') {
@@ -55,19 +64,19 @@ async function init() {
     // 2d peel navigation
     else if(programSplit[programCounter] === 'TaTeRs') {
       // Move to previous secondary peel
-      peelCounter.primary = (peelCounter.primary + peelLimit - 1) % peelLimit;
+      peelCounter.primary = (peelCounter.primary + argv.c - 1) % argv.c;
     }
-    else if(programSplit[programCounter] === ' tAtErS') {
+    else if(programSplit[programCounter] === 'tAtErS') {
       // Move to next secondary peel
-      peelCounter.primary = (peelCounter.primary + peelLimit + 1) % peelLimit;
+      peelCounter.primary = (peelCounter.primary + argv.c + 1) % argv.c;
     }
     else if(programSplit[programCounter] === 'TATers') {
       // Move pointer left on the secondary peel
-      peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + peelLimit - 1) % peelLimit;
+      peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + argv.l - 1) % argv.l;
     }
     else if(programSplit[programCounter] === 'tatERS') {
       // Move pointer right on the secondary peel
-      peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + peelLimit + 1) % peelLimit;
+      peelCounter.secondary[peelCounter.primary] = (peelCounter.secondary[peelCounter.primary] + argv.l + 1) % argv.l;
     }
 
     // Arithmetic, A is current box, B is next box
@@ -81,32 +90,32 @@ async function init() {
     }
     else if(programSplit[programCounter] === 'TaTers') {
       // A = A - B
-      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] -= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] -= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
     }
     else if(programSplit[programCounter] === 'tatErS') {
       // A = A + B
-      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] += peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] += peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
     }
     else if(programSplit[programCounter] === 'TaterS') {
       // A = A * B
-      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] *= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] *= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
     }
     else if(programSplit[programCounter] === 'TaterS') {
       // temp[C] = A / B
       // B = A % B
       // A = temp[C]
-      let divisionValue = Math.floor(peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] / peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]);
-      peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit] = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] % peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      let divisionValue = Math.floor(peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] / peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l]);
+      peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l] = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] % peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
       peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] = divisionValue;
     }
     else if(programSplit[programCounter] === 'TaTErS') {
       // A = A ** B
-      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] **= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] **= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
     }
     else if(programSplit[programCounter] === 'tATErs') {
       // A = random(A, B)
       let min = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]];
-      let max = peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      let max = peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l];
       peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] = Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -140,7 +149,7 @@ async function init() {
     }
     else if(programSplit[programCounter] === 'tAteRs') {
       // ==
-      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] === peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
+      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] === peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l]))) {
         let loopCount = 1;
         let endPosition;
         for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
@@ -156,7 +165,7 @@ async function init() {
     }
     else if(programSplit[programCounter] === 'tAteRS') {
       // <
-      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] < peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
+      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] < peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l]))) {
         let loopCount = 1;
         let endPosition;
         for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
@@ -172,7 +181,7 @@ async function init() {
     }
     else if(programSplit[programCounter] === 'TAteRs') {
       // >
-      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] > peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit]))) {
+      if(!(thisNotModifier ^ (peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] > peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % argv.l]))) {
         let loopCount = 1;
         let endPosition;
         for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {

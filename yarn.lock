@@ -6,3 +6,8 @@ keypress@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/keypress/-/keypress-0.2.1.tgz#1e80454250018dbad4c3fe94497d6e67b6269c77"
   integrity sha1-HoBFQlABjbrUw/6USX1uZ7YmnHc=
+
+minimist@^1.2.0:
+  version "1.2.0"
+  resolved "http://registry.npmjs.org/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
+  integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
