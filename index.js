@@ -109,7 +109,7 @@ async function init() {
       // Open loop
       let loopCount = 1;
       let endPosition;
-      for(endPosition = programCounter + 1; i < programSplit.length && loopCount > 0; i++) {
+      for(endPosition = programCounter + 1; endPosition < programSplit.length && loopCount > 0; endPosition++) {
         if(programSplit[programCounter] === 'tATeRs') {
           loopCount++;
         } else if(programSplit[programCounter] === 'tAtERs') {
