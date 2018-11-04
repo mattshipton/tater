@@ -1,0 +1,10 @@
+{
+  "name": "tater",
+  "version": "1.0.0",
+  "description": "A tater language interpretater",
+  "main": "index.js",
+  "repository": "git@github.com:harryshipton/tater.git",
+  "author": "Harry Shipton <me@harryshipton.com>",
+  "license": "ISC",
+  "private": false
+}
