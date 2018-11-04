@@ -117,11 +117,11 @@ async function init() {
         }
       }
       endPosition--;
-      loopStack.push({ start: programCounter, end: i });
+      loopStack.push({ start: programCounter, end: endPosition });
     }
     else if(programSplit[programCounter] === 'tAtERs') {
       // Close loop
-      programCounter = loopStack[loopStack.length() - 1].start;
+      programCounter = loopStack[loopStack.length - 1].start;
     }
     else if(programSplit[programCounter] === 'TATERs') {
       programCounter = loopStack.pop().end;
