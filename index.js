@@ -61,7 +61,7 @@ async function init() {
       // Move to previous secondary peel
       peelCounter.primary = (peelCounter.primary + argv.c - 1) % argv.c;
     }
-    else if(programSplit[programCounter] === ' tAtErS') {
+    else if(programSplit[programCounter] === 'tAtErS') {
       // Move to next secondary peel
       peelCounter.primary = (peelCounter.primary + argv.c + 1) % argv.c;
     }
