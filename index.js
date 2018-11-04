@@ -41,8 +41,9 @@ while(programCounter < programSplit.length) {
 
   // TODO: Exponential printing of TATERS
   if(programSplit[programCounter] === 'TATERS') {
-    console.log('TATERS');
-    process.exit(0);
+    while(true) {
+      console.log('TATERS');
+    }
   }
 
   // 2d peel navigation
