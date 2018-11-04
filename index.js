@@ -103,6 +103,12 @@ async function init() {
       // A = A ** B
       peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] **= peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
     }
+    else if(programSplit[programCounter] === 'tATErs') {
+      // A = random(A, B)
+      let min = peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]];
+      let max = peelGrid[peelCounter.primary][(peelCounter.secondary[peelCounter.primary] + 1) % peelLimit];
+      peelGrid[peelCounter.primary][peelCounter.secondary[peelCounter.primary]] = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
     // Loop management
     else if(programSplit[programCounter] === 'tATeRs') {
