@@ -9,6 +9,6 @@
   "private": false,
   "dependencies": {
     "keypress": "^0.2.1",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.6"
   }
 }
